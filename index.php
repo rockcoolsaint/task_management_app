@@ -24,7 +24,7 @@
         <label for 'task'>Task: </label>
         <input type="text" name="task" required/>
         <label for 'description'>Description: </label>
-        <textarea name='description' rows="4" cols="50" placeholder='Description' required></textarea>
+        <textarea name='description' rows="4" cols="50" placeholder='Description' required/></textarea>
         <label for 'date'>Day: </label>
         <input type="date" name="day" required/>
         <label for 'time'>Time: </label>
@@ -37,7 +37,7 @@
           $form = $_POST;
           $task = $form['task'];
           $description = $form['description'];
-          $day = date('Y-m-d', strtotime($form['day']));
+          $day = $form['day'];
           $time = $form['time'];
 
           //prepare sql statement
@@ -47,8 +47,8 @@
           //insert into table
           $query = $db->prepare($sql);
           $result = $query->execute(array(':task'=>$task,':description'=>$description,
-                                          ':day'=>$day, ':time'=>$time));
-          if ( $result) {
+                                          ':day'=>$day,':time'=>$time));
+          if ($result) {
             echo "<p>Task successfully registered!</p>";
           } else {
             echo "<p>Sorry, there has been a problem inserting your task. Please contact admin.</p>";
@@ -80,7 +80,7 @@
           echo "</td><td>";
           echo $row['description'];
           echo "</td><td>";
-          echo $row['date'];
+          echo $row['day'];
           echo "</td><td>";
           echo $row['time'];
           echo "</td>";

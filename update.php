@@ -1,28 +1,34 @@
-<?php include 'connection.php';?>
+<?php
+  // configuration info
+  include 'connection.php';
+?>
 
 <?php
-
-	//print_r($_POST);
+	// update statement
+	print_r($_POST);
 	if (isset($_POST['update'])) {
 		$id = $_GET['id'];
+		echo "$id";
 		$task = $_POST['task'];
+		echo "$task";
 		$description = $_POST['description'];
 		$day = $_POST['day'];
-		$time = $_POST['surname'];
-		$update_stmt = "UPDATE users 
-						SET task='{$task}', 
-						description='{$description}', 
-						day='{$day}', 
-						time='{$time}', 
-						WHERE id= {$id}";
+		$time = $_POST['time'];
+		$update_stmt = "UPDATE tasks 
+						SET task='$task', 
+						description='$description', 
+						day='$day', 
+						time='$time' 
+						WHERE id= $id";
 		$update_query = $db->prepare($update_stmt);
 		$update_query->execute();
+		echo $update_query->rowCount();
 		if ($update_query->rowCount() == 1) {
 			//echo $update_query->rowCount()." record updated successfully";
 			$message = "1 record was successfully updated!";
 		}
 		else {
-			//echo $update_stmt. "<br>" . $e->getMessage();
+			$message = "update failed!";
 		}
 		//$update_results = $update_query->fetchAll(PDO::FETCH_ASSOC);
 	}
@@ -30,6 +36,7 @@
 ?>
 
 <?php
+	// query to populate the table
 	$sql = "SELECT * FROM tasks";
 	$query = $db->prepare($sql);
 	$query->execute();
@@ -37,6 +44,7 @@
 ?>
 
 <?php
+	// query to prepopulate fields of the form
 	if (isset($_GET['id'])) {
 		# code...
 		$id = $_GET['id'];
@@ -84,7 +92,7 @@
 		        echo "</td><td>";
 		        echo $row['description'];
 		        echo "</td><td>";
-		        echo $row['date'];
+		        echo $row['day'];
 		        echo "</td><td>";
 		        echo $row['time'];
 		        echo "</td>";
@@ -100,18 +108,14 @@
 				foreach ($edit_results as $result) {
 					# code...
 					echo "<form name=\"registration\" action=\"update.php?id=".$result['id']."\" method=\"POST\">";
-				    echo    "<label for 'username'>Username: </label>";
-				    echo    "<input type=\"text\" name=\"username\" value=".$result['username']." required/>";
-				    echo    "<label for 'password'>Password: </label>";
-				    echo    "<input type=\"password\" name=\"password\" value=".$result['password']." required/>";
-				    echo    "<label for 'first_name'>First name: </label>";
-				    echo    "<input type=\"text\" name=\"first_name\" value=".$result['first_name']." required/>";
-				    echo    "<label for 'surname'>Surname: </label>";
-				    echo    "<input type=\"text\" name=\"surname\" value=".$result['surname']." required/>";
-				    echo    "<label for 'address'>Address: </label>";
-				    echo    "<input type=\"text\" name=\"address\" value=".$result['address']." required/>";
-				    echo    "<label for 'email'>Email: </label>";
-				    echo    "<input type=\"text\" name=\"email\" value=".$result['email']." required/>";
+				    echo    "<label for 'task'>Username: </label>";
+				    echo    "<input type=\"text\" name=\"task\" value=".$result['task']." required/>";
+				    echo    "<label for 'description'>Description: </label>";
+				    echo    "<input type=\"text\" name=\"description\" value=".$result['description']." required/>";
+				    echo    "<label for 'day'>Date: </label>";
+				    echo    "<input type=\"date\" name=\"day\" value=".$result['day']." required/>";
+				    echo    "<label for 'time'>Time: </label>";
+				    echo    "<input type=\"time\" name=\"time\" value=".$result['time']." required/>";
 				    echo    "<br/>";
 				    echo    "<button type=\"submit\" name=\"update\">Update</button>"."&nbsp;&nbsp; Back to "."<a href=\"edit.php\">Edit page</a>";
 				    echo "</form>";

@@ -66,7 +66,7 @@
 		        echo "</td><td>";
 		        echo $row['description'];
 		        echo "</td><td>";
-		        echo $row['date'];
+		        echo $row['day'];
 		        echo "</td><td>";
 		        echo $row['time'];
 			    echo "</td><td>";
@@ -77,36 +77,6 @@
 		}
 		?>
 	</table>
-		<?php
-			if (isset($_GET['id'])){ 
-				foreach ($edit_results as $result) {
-					# code...
-					echo "<form action=\"edit.php?id=".$result['id']."\" method=\"POST\">";
-				    echo    "<label for 'username'>Username: </label>";
-				    echo    "<input type=\"text\" name=\"username\" value=".$result['username']." required/>";
-				    echo    "<label for 'password'>Password: </label>";
-				    echo    "<input type=\"password\" name=\"password\" value=".$result['password']." required/>";
-				    echo    "<label for 'first_name'>First name: </label>";
-				    echo    "<input type=\"text\" name=\"first_name\" value=".$result['first_name']." required/>";
-				    echo    "<label for 'surname'>Surname: </label>";
-				    echo    "<input type=\"text\" name=\"surname\" value=".$result['surname']." required/>";
-				    echo    "<label for 'address'>Address: </label>";
-				    echo    "<input type=\"text\" name=\"address\" value=".$result['address']." required/>";
-				    echo    "<label for 'email'>Email: </label>";
-				    echo    "<input type=\"text\" name=\"email\" value=".$result['email']." required/>";
-				    echo    "<br/>";
-				    echo    "<button type=\"submit\" name=\"update\">Update</button>";
-				    echo "</form>";
-
-				}
-			}
-			if (!empty($message)) {
-					# code...
-				echo "$message";
-				}	
-      	?>
-
-      	
 
   </body>
  </html>
